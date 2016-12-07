@@ -278,10 +278,6 @@ scale_data <- function(data_frame, test = FALSE)
 }
 
 # CLEANING UP THE TRAIN_DATA
-# think about grouping by id
-# how many surveys have they done
-# how many surveys have they done up to that point 
-# average duration 
 train_data <- cleanup(original_train_data, test=FALSE)
 
 trainlist <- subset_train(train_data)
