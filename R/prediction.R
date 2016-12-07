@@ -174,7 +174,6 @@ mn_results <- multnom_preds(train_list, test_list)
 rf_preds <- function(train_list, test_list)
     {
         # RANDOM FOREST
-        library(doMC)
         cluster <- makeCluster(detectCores() - 1) # convention to leave 1 core for OS
         registerDoParallel(cluster)
         getDoParWorkers()
