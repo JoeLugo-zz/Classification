@@ -2,7 +2,7 @@
 # input: probability data frame, probability data frame, probability data frame, test data frame, start, end, increment
 # output: list of LL, x, y, z
 
-wts <- function(df1, df2, df3, train.df, strt, end, inc, df_num=3){
+wts <- function(df1, df2, df3, train.df, strt=0.1, end=1.1, inc=0.1, df_num=3){
   
   temp <- train.df[train.df$obs %in% df1$obs,]
   temp <- temp[order(temp$obs),]
@@ -12,15 +12,14 @@ wts <- function(df1, df2, df3, train.df, strt, end, inc, df_num=3){
   
   df1$obs <- NULL
   df2$obs <- NULL
-  
   x <- c()
   y <- c()
   p <- c()
-  
+
   if (df_num == 3)
   {
-    df3$obs <- NULL
     df3 <- df3[order(df3$obs),]
+    df3$obs <- NULL
     z <- c()
     for(i in seq(strt, end, by=inc)){
       for(j in seq(strt, end, by=inc)){
@@ -41,7 +40,7 @@ wts <- function(df1, df2, df3, train.df, strt, end, inc, df_num=3){
     output <- list(min(p), new_x, new_y, new_z)
   }
 
-  else
+  else 
   {
     for(i in seq(strt, end, by=inc)){
         for(j in seq(strt, end, by=inc)){
@@ -62,12 +61,12 @@ wts <- function(df1, df2, df3, train.df, strt, end, inc, df_num=3){
   
 }
 
-weights1 <- wts(rf_results[[1]][[1]], gbm_results[[1]][[1]], mn_results[[1]][[1]], original_train_data, 0.1, 1.1, 0.1)
-weights2 <- wts(rf_results[[1]][[2]], gbm_results[[1]][[2]], mn_results[[1]][[2]], original_train_data, 0.1, 1.1, 0.1)
-weights3 <- wts(rf_results[[1]][[3]], gbm_results[[1]][[3]], mn_results[[1]][[3]], original_train_data, 0.1, 1.1, 0.1)
-weights4 <- wts(rf_results[[1]][[4]], gbm_results[[1]][[4]], mn_results[[1]][[4]], original_train_data, 0.1, 1.1, 0.1)
+weights1 <- wts(rf_results[[1]][[1]], gbm_results_split[[1]][[1]], mn_results[[1]][[1]], original_train_data)
+weights2 <- wts(rf_results[[1]][[2]], gbm_results_split[[1]][[2]], mn_results[[1]][[2]], original_train_data)
+weights3 <- wts(rf_results[[1]][[3]], gbm_results_split[[1]][[3]], mn_results[[1]][[3]], original_train_data)
+weights4 <- wts(rf_results[[1]][[4]], gbm_results_split[[1]][[4]], mn_results[[1]][[4]], original_train_data)
 
-weights12 <- wts(rf_results[[1]][[1]], gbm_results[[1]][[1]], original_train_data, 0.1, 1.1, 0.1, df_num = 2)
-weights22 <- wts(rf_results[[1]][[2]], gbm_results[[1]][[2]], original_train_data, 0.1, 1.1, 0.1, df_num = 2)
-weights32 <- wts(rf_results[[1]][[3]], gbm_results[[1]][[3]], original_train_data, 0.1, 1.1, 0.1, df_num = 2)
-weights42 <- wts(rf_results[[1]][[4]], gbm_results[[1]][[4]], original_train_data, 0.1, 1.1, 0.1, df_num = 2)
+weights12 <- wts(df1=rf_results[[1]][[1]], df2=gbm_results_split[[1]][[1]], train.df=original_train_data, df_num = 2)
+weights22 <- wts(df1=rf_results[[1]][[2]], df2=gbm_results_split[[1]][[2]], train.df=original_train_data, df_num = 2)
+weights32 <- wts(df1=rf_results[[1]][[3]], df2=gbm_results_split[[1]][[3]], train.df=original_train_data, df_num = 2)
+weights42 <- wts(df1=rf_results[[1]][[4]], df2=gbm_results_split[[1]][[4]], train.df=original_train_data, df_num = 2)
