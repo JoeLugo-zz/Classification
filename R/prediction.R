@@ -9,7 +9,7 @@ gbm_preds <- function(train_list,test_list)
 
         gbm_fit1 <- gbm(interesting ~ ., 
                         cv.folds = 2,
-                        n.trees = 90,
+                        n.trees = 100,
                         data = train_list[[1]], 
                         distribution = "multinomial",
                         shrinkage = 0.1, 
@@ -42,7 +42,7 @@ gbm_preds <- function(train_list,test_list)
 
         gbm_fit4 <- gbm(interesting ~ ., 
                         cv.folds = 2,
-                        n.trees = 50,
+                        n.trees = 60,
                         data = train_list[[4]], 
                         distribution = "multinomial",
                         shrinkage = 0.1, 
